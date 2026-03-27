@@ -18,9 +18,9 @@ public class EcommerceSimulation extends Simulation {
             .contentTypeHeader("application/json")
             .userAgentHeader("Mozilla/5.0");
 
-    private final ScenarioBuilder scenario = scenario("Session management")
+    private final ScenarioBuilder scenario = scenario("session management")
             .exec(
-                    http("getSession")
+                    http("set session value")
                             .get("/session")
                             .check(status().is(200))
                             .check(jsonPath("$.sessionId").saveAs("sessionId"))
@@ -30,7 +30,7 @@ public class EcommerceSimulation extends Simulation {
                 return session;
             })
             .exec(
-                    http("getProducts")
+                    http("get products")
                             .get("/products")
                             .check(status().is(200))
                             .check(jsonPath("$.products[0].id").saveAs("productId"))
@@ -38,7 +38,7 @@ public class EcommerceSimulation extends Simulation {
             )
             .pause(Duration.ofSeconds(1))
             .exec(
-                    http("getProduct with id #{productId}")
+                    http("get product with id #{productId}")
                             .get("/products/#{productId}")
                             .check(status().is(200))
                             .check(jsonPath("$.name").isEL("#{productName}"))
@@ -46,7 +46,7 @@ public class EcommerceSimulation extends Simulation {
             )
             .pause(1, 2)
             .exec(
-                    http("addToCart")
+                    http("add to cart")
                             .post("/cart")
                             .body(StringBody("""
                                     {

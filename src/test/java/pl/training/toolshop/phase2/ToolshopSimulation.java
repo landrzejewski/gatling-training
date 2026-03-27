@@ -17,28 +17,28 @@ public class ToolshopSimulation extends Simulation {
                     .userAgentHeader("Mozilla/5.0");
 
     private final ScenarioBuilder scenario =
-            scenario("Get products")
+            scenario("get products")
                     .exec(
-                            http("getProducts page1")
+                            http("get products - page 1")
                                     .get("/products?page=1")
                                     .check(status().is(200))
                                     .check(jsonPath("$.last_page").ofInt().is(6))
                                     .check(jsonPath("$.total").ofInt().is(50)))
                     .pause(1, 3)
                     .exec(
-                            http("getProducts page2")
+                            http("get products - page 2")
                                     .get("/products?page=2")
                                     .check(status().is(200))
                                     .check(jsonPath("$.data").exists()))
                     .pause(1, 3)
                     .exec(
-                            http("getCategories")
+                            http("get categories")
                                     .get("/categories")
                                     .check(status().is(200))
                                     .check(jsonPath("$").exists()))
                     .pause(1, 3)
                     .exec(
-                            http("getBrands")
+                            http("get brands")
                                     .get("/brands")
                                     .check(status().is(200))
                                     .check(jsonPath("$").exists()));

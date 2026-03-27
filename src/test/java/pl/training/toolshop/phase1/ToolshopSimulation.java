@@ -16,9 +16,9 @@ public class ToolshopSimulation extends Simulation {
                     .contentTypeHeader("application/json");
 
     private final ScenarioBuilder scenario =
-            scenario("Get products")
+            scenario("get products")
                     .exec(
-                            http("getProducts")
+                            http("get products")
                                     .get("/products")
                                     .check(status().is(200))
                                     .check(jsonPath("$.data").exists())

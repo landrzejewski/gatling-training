@@ -18,9 +18,9 @@ public class EcommerceSimulation extends Simulation {
             .contentTypeHeader("application/json")
             .userAgentHeader("Mozilla/5.0");
 
-    private final ScenarioBuilder scenario = scenario("Get products")
+    private final ScenarioBuilder scenario = scenario("get products")
             .exec(
-                    http("getProducts")
+                    http("get products")
                             .get("/products")
                             .check(status().is(200))
                             .check(jsonPath("$.products").exists())
@@ -29,14 +29,14 @@ public class EcommerceSimulation extends Simulation {
             )
             .pause(1, 3)
             .exec(
-                    http("getProducts page1")
+                    http("get products - page 1")
                             .get("/products?page=1")
                             .check(status().is(200))
                             .check(jsonPath("$.products").exists())
             )
             .pause(2)
             .exec(
-                    http("getProduct details")
+                    http("get product details")
                             .get("/products/0")
                             .check(status().is(200))
                             .check(jsonPath("$.name").exists())
@@ -44,7 +44,7 @@ public class EcommerceSimulation extends Simulation {
             )
             .pause(Duration.ofMillis(1_000))
             .exec(
-                    http("getProduct by search")
+                    http("search products")
                             .get("/products?search=shirt")
                             .check(status().is(200))
                             .check(jsonPath("$.products").exists())

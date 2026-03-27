@@ -15,9 +15,9 @@ public class EcommerceSimulation extends Simulation {
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
-    private final ScenarioBuilder scenario = scenario("Get products")
+    private final ScenarioBuilder scenario = scenario("get products")
             .exec(
-                    http("getProducts")
+                    http("get products")
                             .get("/products")
                             .check(status().is(200))
                             .check(jsonPath("$.products").exists())
