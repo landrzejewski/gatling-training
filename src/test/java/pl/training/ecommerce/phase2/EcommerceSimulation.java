@@ -47,7 +47,7 @@ public class EcommerceSimulation extends Simulation {
                     http("getProduct by search")
                             .get("/products?search=shirt")
                             .check(status().is(200))
-                            .check(jsonPath("$.name").exists())
+                            .check(jsonPath("$.products").exists())
             );
 
     {
