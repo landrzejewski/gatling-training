@@ -2,8 +2,8 @@
   "sessionId": "#{sessionId}",
   "cart": [
     {
-      "productId": #{productId},
-      "quantity": #{quantity}
+      "productId": #{randomProductId},
+      "quantity": #{randomQuantity}
     }
   ]
 }
