@@ -13,5 +13,7 @@ public final class Config {
     public static final Duration TEST_DURATION = Duration.ofSeconds(Integer.parseInt(System.getProperty("DURATION", "30")));
     public static final int MAX_RPS = Integer.parseInt(System.getProperty("MAX_RPS", "10"));
     public static final Duration PACE_DURATION = Duration.ofSeconds(Integer.parseInt(System.getProperty("PACE", "10")));
+    public static final Duration MIN_PAUSE = Duration.ofSeconds(1);
+    public static final Duration MAX_PAUSE = Duration.ofSeconds(3);
 
 }

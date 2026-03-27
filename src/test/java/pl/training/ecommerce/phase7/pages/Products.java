@@ -8,7 +8,7 @@ import static io.gatling.javaapi.core.CoreDsl.jsonPath;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public final class ProductsManagement {
+public final class Products {
 
     private static final String PATH = "/products";
 
