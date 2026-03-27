@@ -33,7 +33,7 @@ public class EcommerceSimulation extends Simulation {
             .contentTypeHeader("application/json")
             .userAgentHeader("Mozilla/5.0");
 
-    private final ScenarioBuilder scenario = scenario("session management")
+    private final ScenarioBuilder scenario = scenario("feeders")
             .exec(
                     http("set session value")
                             .get("/session")
