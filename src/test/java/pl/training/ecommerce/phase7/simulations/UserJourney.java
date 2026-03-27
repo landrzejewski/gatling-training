@@ -10,13 +10,9 @@ import pl.training.ecommerce.phase7.pages.Products;
 
 import static io.gatling.javaapi.core.CoreDsl.exec;
 import static io.gatling.javaapi.core.CoreDsl.pace;
-import static pl.training.ecommerce.phase7.config.Config.MAX_PAUSE;
-import static pl.training.ecommerce.phase7.config.Config.MIN_PAUSE;
+import static pl.training.ecommerce.phase7.config.Config.*;
 
 public class UserJourney {
-
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "gatling";
 
     public static final ChainBuilder browseProducts = pace(Config.PACE_DURATION)
             .group("browse products")

@@ -15,5 +15,7 @@ public final class Config {
     public static final Duration PACE_DURATION = Duration.ofSeconds(Integer.parseInt(System.getProperty("PACE", "10")));
     public static final Duration MIN_PAUSE = Duration.ofSeconds(1);
     public static final Duration MAX_PAUSE = Duration.ofSeconds(3);
+    public static final String USERNAME = "admin";
+    public static final String PASSWORD = "gatling";
 
 }
