@@ -1,0 +1,6 @@
+[
+  {"searchTerm": "pliers", "minResults": 4},
+  {"searchTerm": "hammer", "minResults": 7},
+  {"searchTerm": "saw", "minResults": 2},
+  {"searchTerm": "wrench", "minResults": 1}
+]

@@ -1,0 +1,6 @@
+[
+  {"searchTerm": "shirt", "minResults": 1},
+  {"searchTerm": "black", "minResults": 1},
+  {"searchTerm": "bag", "minResults": 1},
+  {"searchTerm": "white", "minResults": 1}
+]
