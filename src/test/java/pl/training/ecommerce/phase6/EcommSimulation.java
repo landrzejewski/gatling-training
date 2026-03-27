@@ -18,29 +18,34 @@ public class EcommSimulation extends Simulation {
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
-    private final ScenarioBuilder scn =
+    private final ScenarioBuilder scenario =
             scenario("control flow")
 
                     // group() — organizuje requesty w raportach pod wspolna nazwa
                     .group("session")
                     .on(
-                            exec(http("create session")
+                            exec(
+                                    http("create session")
                                     .get("/session")
-                                    .check(jsonPath("$.sessionId").saveAs("sessionId")))
-                                    .exec(session -> session.set("lastPrice", 0.0))
+                                    .check(jsonPath("$.sessionId").saveAs("sessionId"))
+                            )
+                           .exec(session -> session.set("lastPrice", 0.0)
                     )
+
                     // repeat(N) — powtarza blok N razy; licznik dostepny jako zmienna
                     .group("paging")
                     .on(
                             repeat(3, "pageIndex")
                                     .on(
-                                            exec(http("Strona #{pageIndex}")
-                                                    .get("/products?page=#{pageIndex}")
-                                                    .check(status().is(200))
+                                            exec(
+                                                    http("Strona #{pageIndex}")
+                                                        .get("/products?page=#{pageIndex}")
+                                                        .check(status().is(200))
                                                     // jsonPath(...).findAll() — ekstrakcja wszystkich trafien jako lista
                                                     .check(jsonPath("$.products[*].id").findAll().saveAs("productIds"))
                                             )
-                                                    .pause(1))
+                                            .pause(1)
+                                    )
                     )
 
                     // foreach() — iteruje po liscie z sesji
@@ -54,11 +59,13 @@ public class EcommSimulation extends Simulation {
                             })
                                     .foreach("#{selectedIds}", "currentId")
                                     .on(
-                                            exec(http("Produkt #{currentId}")
+                                            exec(
+                                                    http("Produkt #{currentId}")
                                                     .get("/products/#{currentId}")
                                                     .check(status().is(200))
-                                                    .check(jsonPath("$.price").saveAs("lastPrice")))
-                                                    .pause(1)
+                                                    .check(jsonPath("$.price").saveAs("lastPrice"))
+                                            )
+                                            .pause(1)
                                     )
                     )
 
@@ -72,7 +79,8 @@ public class EcommSimulation extends Simulation {
                                                     session -> {
                                                         System.out.println("Ostatnia cena: " + session.getDouble("lastPrice"));
                                                         return session;
-                                                    }))
+                                                    })
+                                            )
                                     // doIfOrElse — dwie sciezki: then/orElse
                                     .doIfOrElse(session -> session.getDouble("lastPrice") > 50.0)
                                     .then(
@@ -80,31 +88,32 @@ public class EcommSimulation extends Simulation {
                                                     session -> {
                                                         System.out.println("Produkt drogi — pomijam koszyk");
                                                         return session.set("action", "skip");
-                                                    }))
+                                                    })
+                                            )
                                     .orElse(
                                             exec(
                                                     session -> {
                                                         System.out.println("Produkt tani — dodaje do koszyka");
                                                         return session.set("action", "buy");
-                                                    })))
+                                                    }))
+                                            )
 
                     // randomSwitch() z Choice.WithWeight — losowy wybor sciezki
                     .group("random")
                     .on(
                             randomSwitch()
                                     .on(
-                                            new Choice.WithWeight(
-                                                    70.0,
+                                            new Choice.WithWeight(70.0,
                                                     exec(
                                                             http("Przegladanie produktow")
                                                                     .get("/products?page=0")
                                                                     .check(status().is(200)))),
-                                            new Choice.WithWeight(
-                                                    30.0,
+                                            new Choice.WithWeight(30.0,
                                                     exec(
                                                             http("Wyszukiwanie")
                                                                     .get("/products?search=shirt")
-                                                                    .check(status().is(200))))))
+                                                                    .check(status().is(200)))))
+                                )
 
                     // exitBlockOnFail() — przerywa blok przy pierwszym bledzie
                     .group("errors")
@@ -158,7 +167,7 @@ public class EcommSimulation extends Simulation {
                     );
 
     {
-        setUp(scn.injectOpen(atOnceUsers(1)))
+        setUp(scenario.injectOpen(atOnceUsers(1)))
                 .protocols(httpProtocol)
                 .assertions(global().failedRequests().percent().lt(5.0));
     }
