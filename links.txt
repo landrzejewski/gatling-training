@@ -1,0 +1,11 @@
+API:
+https://practicesoftwaretesting.com
+https://ecomm.gatling.io
+https://videogamedb.uk/swagger-ui/index.html
+
+Links:
+https://jsonpath.com
+
+Uruchamianie:
+# ./mvnw gatling:test -Dgatling.simulationClass=pl.training.ecomm.etap5.EcommSimulation -DTEST_TYPE=CONSTANT_RATE
+
